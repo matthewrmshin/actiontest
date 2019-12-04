@@ -23,10 +23,6 @@ jobs:
       uses: matthewrmshin/conda-action@v1
       with:
         args: pytest
-    - name: Test install Iris
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: conda install --channel=conda-forge iris
     - name: Test import Iris
       uses: matthewrmshin/conda-action@v1
       with:
