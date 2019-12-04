@@ -1,0 +1,33 @@
+name: Python application
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Conda
+      uses: matthewrmshin/conda-action@v1
+      with:
+        args: conda env update
+    - name: Lint with flake8
+      uses: matthewrmshin/conda-action@v1
+      with:
+        args: flake8 . --show-source --statistics
+    - name: Install package
+      uses: matthewrmshin/conda-action@v1
+      with:
+        args: python3 setup.py install
+    - name: Test with pytest
+      uses: matthewrmshin/conda-action@v1
+      with:
+        args: pytest
+    - name: Test install Iris
+      uses: matthewrmshin/conda-action@v1
+      with:
+        args: conda install iris
+    - name: Test import Iris
+      uses: matthewrmshin/conda-action@v1
+      with:
+        args: python3 -c 'import iris; print(f"{iris.__version__=}")'
