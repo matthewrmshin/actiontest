@@ -8,9 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set up Conda
-    - run: conda env create -n actiontest
+      run: conda env create -n actiontest
     - name: Lint with flake8
-    - run: |
+      run: |
         conda activate actiontest
         flake8 . --show-source --statistics
     - name: Install package
