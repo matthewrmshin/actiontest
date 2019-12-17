@@ -39,6 +39,6 @@ setup(
     #     'test': ['flake8', 'pytest', 'pytest-cov'],
     # },
     # package_data={},
-    # entry_points={'console_scripts': ['...', ...]},
+    entry_points={'console_scripts': ['hello=hello.__main__:main']},
     # project_urls={},
 )

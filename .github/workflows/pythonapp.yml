@@ -8,22 +8,23 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set up Conda
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: conda env update
+    - run: conda env create -n actiontest
     - name: Lint with flake8
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: flake8 . --show-source --statistics
+    - run: |
+        conda activate actiontest
+        flake8 . --show-source --statistics
     - name: Install package
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: python3 setup.py install
+      run: |
+        conda actiontest actiontest
+        python3 setup.py install
     - name: Test with pytest
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: pytest
+      run: |
+        conda actiontest actiontest
+        pytest --cov hello
+        coverage run -a $(command -v hello)
+        coverage run -a $(command -v hello) Earth
+        coverage report --fail-under=90
     - name: Test import Iris
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: python3 -m irisversion
+      run: |
+        conda actiontest actiontest
+        python3 -m irisversion
