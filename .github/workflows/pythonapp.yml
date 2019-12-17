@@ -11,14 +11,17 @@ jobs:
       run: conda env create -n actiontest
     - name: Lint with flake8
       run: |
+        source '/opt/conda/etc/profile.d/conda.sh'
         conda activate actiontest
         flake8 . --show-source --statistics
     - name: Install package
       run: |
+        source '/opt/conda/etc/profile.d/conda.sh'
         conda actiontest actiontest
         python3 setup.py install
     - name: Test with pytest
       run: |
+        source '/opt/conda/etc/profile.d/conda.sh'
         conda actiontest actiontest
         pytest --cov hello
         coverage run -a $(command -v hello)
@@ -26,5 +29,6 @@ jobs:
         coverage report --fail-under=90
     - name: Test import Iris
       run: |
+        source '/opt/conda/etc/profile.d/conda.sh'
         conda actiontest actiontest
         python3 -m irisversion
