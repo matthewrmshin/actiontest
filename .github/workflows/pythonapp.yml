@@ -6,29 +6,34 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Conda
-      run: conda env create -n actiontest
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        "${CONDA}/bin/conda" env create -n actiontest
     - name: Lint with flake8
       run: |
-        source '/usr/share/miniconda/etc/profile.d/conda.sh'
+        source "${CONDA}/etc/profile.d/conda.sh"
         conda activate actiontest
         flake8 . --show-source --statistics
     - name: Install package
       run: |
-        source '/usr/share/miniconda/etc/profile.d/conda.sh'
+        source "${CONDA}/etc/profile.d/conda.sh"
         conda activate actiontest
         python3 setup.py install
     - name: Test with pytest
       run: |
-        source '/usr/share/miniconda/etc/profile.d/conda.sh'
+        source "${CONDA}/etc/profile.d/conda.sh"
         conda activate actiontest
         pytest --cov hello
-        coverage run -a $(command -v hello)
-        coverage run -a $(command -v hello) Earth
+        coverage run -a --source=hello "$(command -v hello)"
+        coverage run -a --source=hello "$(command -v hello)" Earth
         coverage report --fail-under=90
     - name: Test import Iris
       run: |
-        source '/usr/share/miniconda/etc/profile.d/conda.sh'
+        source "${CONDA}/etc/profile.d/conda.sh"
         conda activate actiontest
         python3 -m irisversion

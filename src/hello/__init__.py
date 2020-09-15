@@ -10,4 +10,4 @@ def hello(who: str = 'world') -> str:
     if who:
         return f'Hello {who}! Hi!'
     else:
-        return f'Hello! Hi!'
+        return 'Hello! Hi!'
